@@ -1,7 +1,3 @@
-const superHero = require('./superHero');
-console.log(superHero.getName());
-superHero.setName('Superman');
-console.log(superHero.getName());
-
-const newSuperHero = require('./superHero');
-console.log(newSuperHero.getName());
+const buffer = new Buffer.from('Gkov');
+console.log(buffer.toJSON());
+console.log(buffer);
