@@ -2,18 +2,25 @@
 ///
 ///
 ///
+const http = require('node:http');
 const fs = require('node:fs');
-const readableStream = fs.createReadStream('./file.txt', {
-  encoding: 'utf-8',
-  highWaterMark: 2,
+
+const server = http.createServer((req, res) => {
+  if (req.url === '/') {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Home Page');
+  } else if (req.url === '/about') {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('About Page');
+  } else if (req.url === '/api') {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ firstName: 'Bruce', lastName: 'Wayne' }));
+  } else {
+    res.writeHead(404);
+    res.end('Page not found');
+  }
 });
 
-const writableStream = fs.createWriteStream('./file2.txt', {
-  encoding: 'utf-8',
+server.listen(3000, () => {
+  console.log('server running on port 3000');
 });
-
-readableStream.on('data', (chunk) => {
-  console.log(chunk);
-  writableStream.write(chunk);
-});
-console.log('hi');
